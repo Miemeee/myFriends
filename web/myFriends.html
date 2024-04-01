@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Friends</title>
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #3e8ca7;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #f2c120;
+        }
+
+        span {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        span.error {
+            color: red;
+        }
+        
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1 class="glitched">My Friends Info</h1>
+    </header>
+    <p>Number of friends: <span id="friendCount">0</span></p>
+    <button id="inputDataBtn">Input Friend Data</button>
+    <button id="calculateTotalAgeBtn">Calculate Total Age</button>
+    <button id="calculateAverageAgeBtn">Calculate Average Age</button>
+    <button id="findYoungestBtn">Find Youngest Friend</button>
+    <button id="findOldestBtn">Find Oldest Friend</button>
+    <button id="resetBtn">Reset</button>
+
+    <script>
+        let friendCount = 0;
+        let friendsData = [];
+
+        function generateRandomFriends() {
+            friendCount = Math.floor(Math.random() * 9) + 1;
+            document.getElementById('friendCount').textContent = friendCount;
+        }
+
+        function inputFriendData() {
+            for (let i = 0; i < friendCount; i++) {
+                let nickname = prompt(`Enter nickname for friend ${i + 1}:`);
+                let age = parseInt(prompt(`Enter age for friend ${i + 1}:`));
+                friendsData.push({ nickname, age });
+            }
+        }
+
+        function calculateTotalAge() {
+            let totalAge = 0;
+            for (let friend of friendsData) {
+                totalAge += friend.age;
+            }
+            alert(`Total Age of Friends: ${totalAge}`);
+        }
+
+        function calculateAverageAge() {
+            let totalAge = 0;
+            for (let friend of friendsData) {
+                totalAge += friend.age;
+            }
+            let averageAge = totalAge / friendsData.length;
+            alert(`Average Age of Friends: ${averageAge.toFixed(2)}`);
+        }
+
+        function findYoungestFriend() {
+            let youngestAge = Infinity;
+            let youngestFriends = [];
+            for (let friend of friendsData) {
+                if (friend.age < youngestAge) {
+                    youngestAge = friend.age;
+                    youngestFriends = [friend];
+                } else if (friend.age === youngestAge) {
+                    youngestFriends.push(friend);
+                }
+            }
+            let message = "Youngest Friend(s):\n";
+            for (let friend of youngestFriends) {
+                message += `${friend.nickname}, Age: ${friend.age}\n`;
+            }
+            alert(message);
+        }
+
+        function findOldestFriend() {
+            let oldestAge = -Infinity;
+            let oldestFriends = [];
+            for (let friend of friendsData) {
+                if (friend.age > oldestAge) {
+                    oldestAge = friend.age;
+                    oldestFriends = [friend];
+                } else if (friend.age === oldestAge) {
+                    oldestFriends.push(friend);
+                }
+            }
+            let message = "Oldest Friend(s):\n";
+            for (let friend of oldestFriends) {
+                message += `${friend.nickname}, Age: ${friend.age}\n`;
+            }
+            alert(message);
+        }
+
+        function resetData() {
+            friendCount = 0;
+            friendsData = [];
+            document.getElementById('friendCount').textContent = friendCount;
+        }
+
+        document.getElementById('inputDataBtn').addEventListener('click', inputFriendData);
+        document.getElementById('calculateTotalAgeBtn').addEventListener('click', calculateTotalAge);
+        document.getElementById('calculateAverageAgeBtn').addEventListener('click', calculateAverageAge);
+        document.getElementById('findYoungestBtn').addEventListener('click', findYoungestFriend);
+        document.getElementById('findOldestBtn').addEventListener('click', findOldestFriend);
+        document.getElementById('resetBtn').addEventListener('click', resetData);
+
+        window.addEventListener('load', generateRandomFriends);
+    </script>
+</body>
+</html>
